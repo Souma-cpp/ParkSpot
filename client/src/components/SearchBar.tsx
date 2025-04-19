@@ -7,9 +7,10 @@ interface SearchBarProps {
 export default function SearchBar({ onSearch }: SearchBarProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [recentSearches, setRecentSearches] = useState<string[]>([
-    "Central Park", 
-    "Times Square",
-    "Brooklyn"
+    "Kolkata", 
+    "Mumbai",
+    "Delhi",
+    "Bangalore"
   ]);
   
   const handleSearch = (e: React.FormEvent) => {
@@ -37,7 +38,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           <input 
             type="text" 
             className="w-full px-4 py-3 pl-10 pr-12 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
-            placeholder="Search for parking locations (try 'Central Park' or 'Brooklyn')"
+            placeholder="Search for parking locations (try 'Kolkata' or 'Mumbai')"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

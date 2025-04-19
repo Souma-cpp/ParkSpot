@@ -18,6 +18,7 @@ interface BookingFormData {
 
 // Sample locations to simulate geocoding results
 const locationCoordinates: Record<string, [number, number]> = {
+  // US Cities
   "new york": [40.7128, -74.0060],
   "times square": [40.7580, -73.9855],
   "central park": [40.7812, -73.9665],
@@ -27,7 +28,35 @@ const locationCoordinates: Record<string, [number, number]> = {
   "queens": [40.7282, -73.7949],
   "bronx": [40.8448, -73.8648],
   "harlem": [40.8116, -73.9465],
-  "wall street": [40.7064, -74.0090]
+  "wall street": [40.7064, -74.0090],
+  
+  // Indian Cities
+  "mumbai": [19.0760, 72.8777],
+  "delhi": [28.7041, 77.1025],
+  "bangalore": [12.9716, 77.5946],
+  "hyderabad": [17.3850, 78.4867],
+  "ahmedabad": [23.0225, 72.5714],
+  "chennai": [13.0827, 80.2707],
+  "kolkata": [22.5726, 88.3639],
+  "surat": [21.1702, 72.8311],
+  "pune": [18.5204, 73.8567],
+  "jaipur": [26.9124, 75.7873],
+  
+  // Popular areas in Mumbai
+  "bandra": [19.0596, 72.8295],
+  "andheri": [19.1136, 72.8697],
+  "worli": [19.0096, 72.8175],
+  "nariman point": [18.9256, 72.8242],
+  
+  // Popular areas in Delhi
+  "connaught place": [28.6289, 77.2099],
+  "india gate": [28.6129, 77.2295],
+  "hauz khas": [28.5531, 77.2021],
+  
+  // Popular areas in Kolkata
+  "park street": [22.5513, 88.3494],
+  "salt lake": [22.5816, 88.4127],
+  "new town": [22.6033, 88.4619]
 };
 
 // Type for the location search
