@@ -9,6 +9,7 @@ export interface ParkingSpot {
   image: string;
   type: string;
   address: string;
+  city?: string; // The city this parking spot belongs to
 }
 
 export interface BookingFormData {

@@ -67,8 +67,16 @@ const MapSection = forwardRef<MapSectionRef, MapSectionProps>(({
   // Handle searched location changes
   useEffect(() => {
     if (isMapInitialized && mapRef.current && searchedLocation) {
+      // Determine if this is a city or a specific location
+      const isCityLevel = ['mumbai', 'delhi', 'kolkata', 'bangalore', 'new york'].some(
+        city => searchedLocation.name.toLowerCase().includes(city)
+      );
+      
+      // Set appropriate zoom level - cities get a wider view
+      const zoomLevel = isCityLevel ? 12 : 15;
+      
       // Center map on the searched location
-      mapRef.current.setView(searchedLocation.coordinates, 15);
+      mapRef.current.setView(searchedLocation.coordinates, zoomLevel);
       
       // Remove previous search marker if exists
       if (searchMarkerRef.current) {
@@ -88,10 +96,16 @@ const MapSection = forwardRef<MapSectionRef, MapSectionProps>(({
         zIndexOffset: 1000 // Ensure it's on top of other markers
       }).addTo(mapRef.current);
       
+      // Format the location name with proper capitalization
+      const formattedName = searchedLocation.name
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+        
       // Add popup for the search location
       searchMarkerRef.current.bindPopup(`
         <div class="text-center">
-          <strong>${searchedLocation.name}</strong><br>
+          <strong>${formattedName}</strong><br>
           <span class="text-sm">Searched location</span>
         </div>
       `).openPopup();
@@ -174,7 +188,12 @@ const MapSection = forwardRef<MapSectionRef, MapSectionProps>(({
           <div className="flex items-center">
             <i className="fas fa-map-marker-alt text-primary mr-2"></i>
             <div>
-              <p className="font-semibold">{searchedLocation.name}</p>
+              <p className="font-semibold">
+                {searchedLocation.name
+                  .split(' ')
+                  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(' ')}
+              </p>
               <p className="text-xs text-gray-600 dark:text-gray-400">
                 {parkingSpots.length} parking spots found nearby
               </p>

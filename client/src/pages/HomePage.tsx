@@ -96,23 +96,55 @@ export default function HomePage() {
         mapSectionRef.current.centerMapOn(coordinates);
       }
       
-      // Filter parking spots by proximity to the location
-      // In a real app, you would use actual distance calculation
-      // Here we're just simulating by creating a random subset of spots
-      const randomOffset = Math.floor(Math.random() * 3) + 1; // 1-3 spots shown
-      const numberOfSpots = Math.min(parkingSpots.length, randomOffset + 3);
+      // Extract the city name for filtering the parking spots
+      // We assume the query might be a neighborhood, so we need to determine the main city
+      let cityName = name;
       
-      // Create a new array with modified distances from the searched location
-      const spotsWithUpdatedDistance = parkingSpots.slice(0, numberOfSpots).map(spot => {
-        // Generate a random distance between 0.1 and 1.5 miles
-        const randomDistance = (Math.random() * 1.4 + 0.1).toFixed(1);
-        return {
-          ...spot,
-          distance: `${randomDistance} miles away`
-        };
-      });
+      // Handle neighborhoods by mapping them to their parent city
+      if (name.includes("park street") || name.includes("salt lake") || name.includes("new town")) {
+        cityName = "kolkata";
+      } else if (name.includes("bandra") || name.includes("andheri") || name.includes("worli") || name.includes("nariman point")) {
+        cityName = "mumbai";
+      } else if (name.includes("connaught place") || name.includes("india gate") || name.includes("hauz khas")) {
+        cityName = "delhi";
+      } else if (name.includes("central park") || name.includes("times square") || name.includes("broadway")) {
+        cityName = "new york";
+      }
       
-      setFilteredParkingSpots(spotsWithUpdatedDistance);
+      // Find all parking spots in the searched city
+      const citySpots = parkingSpots.filter(spot => 
+        spot.city && spot.city.toLowerCase() === cityName
+      );
+      
+      if (citySpots.length > 0) {
+        // Found parking spots for the given city
+        // Update distances to make them more realistic for the search
+        const spotsWithUpdatedDistance = citySpots.map(spot => {
+          // Generate a random distance between 0.1 and 1.5 km/miles
+          // Use km for Indian cities, miles for US cities
+          const randomDistance = (Math.random() * 1.4 + 0.1).toFixed(1);
+          const unit = cityName.includes("new york") ? "miles away" : "km away";
+          return {
+            ...spot,
+            distance: `${randomDistance} ${unit}`
+          };
+        });
+        
+        setFilteredParkingSpots(spotsWithUpdatedDistance);
+      } else {
+        // No spots found for this city, just show random spots
+        const randomSpots = parkingSpots
+          .slice(0, 4)
+          .map(spot => {
+            const randomDistance = (Math.random() * 1.4 + 0.1).toFixed(1);
+            return {
+              ...spot,
+              distance: `${randomDistance} km away`
+            };
+          });
+        
+        setFilteredParkingSpots(randomSpots);
+      }
     } else {
       // If no location found, reset and show all parking spots
       setSearchedLocation(null);
