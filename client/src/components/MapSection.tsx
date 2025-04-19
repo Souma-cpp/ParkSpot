@@ -1,16 +1,40 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
 import { ParkingSpot } from "@/types";
 import L from "leaflet";
+
+interface SearchLocation {
+  name: string;
+  coordinates: [number, number];
+}
 
 interface MapSectionProps {
   parkingSpots: ParkingSpot[];
   onBookParking: (spotId: number) => void;
+  searchedLocation?: SearchLocation | null;
 }
 
-export default function MapSection({ parkingSpots, onBookParking }: MapSectionProps) {
+interface MapSectionRef {
+  centerMapOn: (coords: [number, number]) => void;
+}
+
+const MapSection = forwardRef<MapSectionRef, MapSectionProps>(({ 
+  parkingSpots, 
+  onBookParking,
+  searchedLocation
+}, ref) => {
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [isMapInitialized, setIsMapInitialized] = useState(false);
+  const searchMarkerRef = useRef<L.Marker | null>(null);
+
+  // Expose methods to parent via ref
+  useImperativeHandle(ref, () => ({
+    centerMapOn: (coords: [number, number]) => {
+      if (mapRef.current) {
+        mapRef.current.setView(coords, 15);
+      }
+    }
+  }));
 
   useEffect(() => {
     // Import Leaflet dynamically
@@ -40,12 +64,46 @@ export default function MapSection({ parkingSpots, onBookParking }: MapSectionPr
     };
   }, []);
   
+  // Handle searched location changes
+  useEffect(() => {
+    if (isMapInitialized && mapRef.current && searchedLocation) {
+      // Center map on the searched location
+      mapRef.current.setView(searchedLocation.coordinates, 15);
+      
+      // Remove previous search marker if exists
+      if (searchMarkerRef.current) {
+        mapRef.current.removeLayer(searchMarkerRef.current);
+      }
+      
+      // Add a marker for the searched location
+      const searchIcon = L.divIcon({
+        html: '<i class="fas fa-map-marker-alt"></i>',
+        className: 'search-marker',
+        iconSize: [30, 30]
+      });
+      
+      // Create and store the search marker
+      searchMarkerRef.current = L.marker(searchedLocation.coordinates, { 
+        icon: searchIcon,
+        zIndexOffset: 1000 // Ensure it's on top of other markers
+      }).addTo(mapRef.current);
+      
+      // Add popup for the search location
+      searchMarkerRef.current.bindPopup(`
+        <div class="text-center">
+          <strong>${searchedLocation.name}</strong><br>
+          <span class="text-sm">Searched location</span>
+        </div>
+      `).openPopup();
+    }
+  }, [isMapInitialized, searchedLocation]);
+  
   // Add markers when map is initialized and spots are available
   useEffect(() => {
     if (isMapInitialized && mapRef.current && parkingSpots.length > 0) {
-      // Clear existing markers
+      // Clear existing parking markers
       mapRef.current.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
+        if (layer instanceof L.Marker && layer !== searchMarkerRef.current) {
           mapRef.current?.removeLayer(layer);
         }
       });
@@ -111,6 +169,19 @@ export default function MapSection({ parkingSpots, onBookParking }: MapSectionPr
   return (
     <div className="map-container bg-gray-200 dark:bg-gray-700 relative">
       <div ref={mapContainerRef} className="h-full w-full"></div>
+      {searchedLocation && (
+        <div className="absolute top-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 z-10 max-w-[60%]">
+          <div className="flex items-center">
+            <i className="fas fa-map-marker-alt text-primary mr-2"></i>
+            <div>
+              <p className="font-semibold">{searchedLocation.name}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                {parkingSpots.length} parking spots found nearby
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="absolute bottom-4 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 z-10">
         <button 
           onClick={getCurrentLocation}
@@ -133,4 +204,8 @@ export default function MapSection({ parkingSpots, onBookParking }: MapSectionPr
       </div>
     </div>
   );
-}
+});
+
+MapSection.displayName = 'MapSection';
+
+export default MapSection;

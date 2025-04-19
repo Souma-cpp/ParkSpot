@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
 import MapSection from "@/components/MapSection";
@@ -16,6 +16,26 @@ interface BookingFormData {
   duration: string;
 }
 
+// Sample locations to simulate geocoding results
+const locationCoordinates: Record<string, [number, number]> = {
+  "new york": [40.7128, -74.0060],
+  "times square": [40.7580, -73.9855],
+  "central park": [40.7812, -73.9665],
+  "brooklyn": [40.6782, -73.9442],
+  "soho": [40.7248, -74.0018],
+  "manhattan": [40.7831, -73.9712],
+  "queens": [40.7282, -73.7949],
+  "bronx": [40.8448, -73.8648],
+  "harlem": [40.8116, -73.9465],
+  "wall street": [40.7064, -74.0090]
+};
+
+// Type for the location search
+interface SearchLocation {
+  name: string;
+  coordinates: [number, number];
+}
+
 export default function HomePage() {
   const [selectedSpot, setSelectedSpot] = useState<ParkingSpot | null>(null);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
@@ -25,9 +45,54 @@ export default function HomePage() {
     date: "",
     code: "",
   });
+  
+  const [searchedLocation, setSearchedLocation] = useState<SearchLocation | null>(null);
+  const [filteredParkingSpots, setFilteredParkingSpots] = useState<ParkingSpot[]>(parkingSpots);
+  const mapSectionRef = useRef<{ centerMapOn: (coords: [number, number]) => void } | null>(null);
+
+  const handleSearch = (query: string) => {
+    const normalizedQuery = query.toLowerCase().trim();
+    
+    // Find matching location from our mock data
+    const foundLocation = Object.entries(locationCoordinates).find(([name]) => 
+      name.includes(normalizedQuery) || normalizedQuery.includes(name)
+    );
+    
+    if (foundLocation) {
+      const [name, coordinates] = foundLocation;
+      setSearchedLocation({ name, coordinates });
+      
+      // Center map on the found location
+      if (mapSectionRef.current) {
+        mapSectionRef.current.centerMapOn(coordinates);
+      }
+      
+      // Filter parking spots by proximity to the location
+      // In a real app, you would use actual distance calculation
+      // Here we're just simulating by creating a random subset of spots
+      const randomOffset = Math.floor(Math.random() * 3) + 1; // 1-3 spots shown
+      const numberOfSpots = Math.min(parkingSpots.length, randomOffset + 3);
+      
+      // Create a new array with modified distances from the searched location
+      const spotsWithUpdatedDistance = parkingSpots.slice(0, numberOfSpots).map(spot => {
+        // Generate a random distance between 0.1 and 1.5 miles
+        const randomDistance = (Math.random() * 1.4 + 0.1).toFixed(1);
+        return {
+          ...spot,
+          distance: `${randomDistance} miles away`
+        };
+      });
+      
+      setFilteredParkingSpots(spotsWithUpdatedDistance);
+    } else {
+      // If no location found, reset and show all parking spots
+      setSearchedLocation(null);
+      setFilteredParkingSpots(parkingSpots);
+    }
+  };
 
   const handleBookParking = (spotId: number) => {
-    const spot = parkingSpots.find(s => s.id === spotId) || null;
+    const spot = filteredParkingSpots.find(s => s.id === spotId) || null;
     setSelectedSpot(spot);
     setIsBookingModalOpen(true);
   };
@@ -67,15 +132,17 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <SearchBar />
+      <SearchBar onSearch={handleSearch} />
       
       <main className="flex-grow">
         <MapSection 
-          parkingSpots={parkingSpots} 
-          onBookParking={handleBookParking} 
+          ref={mapSectionRef}
+          parkingSpots={filteredParkingSpots} 
+          onBookParking={handleBookParking}
+          searchedLocation={searchedLocation}
         />
         <ParkingList 
-          parkingSpots={parkingSpots} 
+          parkingSpots={filteredParkingSpots} 
           onBookParking={handleBookParking} 
         />
         
