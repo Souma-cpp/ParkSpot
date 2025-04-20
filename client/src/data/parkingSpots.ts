@@ -53,7 +53,7 @@ const mumbaiSpots: ParkingSpot[] = [
     distance: "0.2 km away",
     available: 45,
     total: 200,
-    image: "https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/2413890/pexels-photo-2413890.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Multi-level",
     address: "Nariman Point, Mumbai 400021",
     city: "mumbai"
@@ -66,7 +66,7 @@ const mumbaiSpots: ParkingSpot[] = [
     distance: "0.4 km away",
     available: 120,
     total: 350,
-    image: "https://images.unsplash.com/photo-1590674067030-9c789b8a513f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/2833714/pexels-photo-2833714.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Covered",
     address: "BKC, Bandra East, Mumbai 400051",
     city: "mumbai"
@@ -79,7 +79,7 @@ const mumbaiSpots: ParkingSpot[] = [
     distance: "0.3 km away",
     available: 25,
     total: 80,
-    image: "https://images.unsplash.com/photo-1470224114660-3f6686c562eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/2226607/pexels-photo-2226607.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Open Lot",
     address: "Worli Sea Face, Mumbai 400018",
     city: "mumbai"
@@ -92,7 +92,7 @@ const mumbaiSpots: ParkingSpot[] = [
     distance: "0.1 km away",
     available: 60,
     total: 150,
-    image: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/388829/pexels-photo-388829.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Metro Parking",
     address: "Andheri Metro Station, Mumbai 400053",
     city: "mumbai"
@@ -109,7 +109,7 @@ const delhiSpots: ParkingSpot[] = [
     distance: "0.3 km away",
     available: 35,
     total: 150,
-    image: "https://images.unsplash.com/photo-1601225998129-a85800dae2fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/2240571/pexels-photo-2240571.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Underground",
     address: "Connaught Place, New Delhi 110001",
     city: "delhi"
@@ -122,7 +122,7 @@ const delhiSpots: ParkingSpot[] = [
     distance: "0.5 km away",
     available: 90,
     total: 200,
-    image: "https://images.unsplash.com/photo-1590674067030-9c789b8a513f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/173926/pexels-photo-173926.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Open Lot",
     address: "India Gate, New Delhi 110001",
     city: "delhi"
@@ -135,7 +135,7 @@ const delhiSpots: ParkingSpot[] = [
     distance: "0.1 km away",
     available: 150,
     total: 500,
-    image: "https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/31693075/pexels-photo-31693075/free-photo-of-historic-red-brick-building-with-cars-parked.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Multi-level",
     address: "Saket District Centre, New Delhi 110017",
     city: "delhi"
@@ -152,7 +152,7 @@ const kolkataSpots: ParkingSpot[] = [
     distance: "0.2 km away",
     available: 32,
     total: 80,
-    image: "https://images.unsplash.com/photo-1621929747188-0b4dc28498d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/1756957/pexels-photo-1756957.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Underground",
     address: "Park Street Metro, Kolkata 700016",
     city: "kolkata"
@@ -165,7 +165,7 @@ const kolkataSpots: ParkingSpot[] = [
     distance: "0.4 km away",
     available: 45,
     total: 120,
-    image: "https://images.unsplash.com/photo-1470224114660-3f6686c562eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/103601/pexels-photo-103601.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Multi-level",
     address: "New Market Area, Kolkata 700087",
     city: "kolkata"
@@ -178,7 +178,7 @@ const kolkataSpots: ParkingSpot[] = [
     distance: "0.3 km away",
     available: 200,
     total: 500,
-    image: "https://images.unsplash.com/photo-1590674067030-9c789b8a513f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/753876/pexels-photo-753876.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Open Lot",
     address: "Salt Lake Stadium, Kolkata 700098",
     city: "kolkata"
@@ -191,7 +191,7 @@ const kolkataSpots: ParkingSpot[] = [
     distance: "0.1 km away",
     available: 65,
     total: 150,
-    image: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/1004409/pexels-photo-1004409.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Open Lot",
     address: "Science City, Kolkata 700046",
     city: "kolkata"
@@ -208,7 +208,7 @@ const bangaloreSpots: ParkingSpot[] = [
     distance: "0.3 km away",
     available: 40,
     total: 100,
-    image: "https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/1054387/pexels-photo-1054387.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Smart Parking",
     address: "MG Road, Bangalore 560001",
     city: "bangalore"
@@ -221,7 +221,7 @@ const bangaloreSpots: ParkingSpot[] = [
     distance: "0.1 km away",
     available: 120,
     total: 300,
-    image: "https://images.unsplash.com/photo-1590674067030-9c789b8a513f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/2280148/pexels-photo-2280148.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Multi-level",
     address: "Koramangala, Bangalore 560095",
     city: "bangalore"
@@ -234,7 +234,7 @@ const bangaloreSpots: ParkingSpot[] = [
     distance: "0.2 km away",
     available: 55,
     total: 120,
-    image: "https://images.unsplash.com/photo-1470224114660-3f6686c562eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "https://images.pexels.com/photos/3095798/pexels-photo-3095798.jpeg?auto=compress&cs=tinysrgb&w=600",
     type: "Metro Parking",
     address: "Indiranagar Metro Station, Bangalore 560038",
     city: "bangalore"
